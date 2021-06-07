@@ -1,11 +1,18 @@
 UNAME = $(shell uname)
 ifeq ($(UNAME),Linux)
-    CXX = g++
-    CXXFLAGS = -m64 -fopenmp -O3 -DMKL
+    PLASMA_ROOT = /opt/PLASMA-20.9.20
+    PLASMA_INC_DIR = $(PLASMA_ROOT)/include
+    PLASMA_LIBS = $(PLASMA_ROOT)/lib/libcoreblas.a
+
     LIB_DIR = /opt/intel/compilers_and_libraries/linux/lib/intel64
     LIBS = -pthread -lm -ldl
-    MKL_ROOT = /opt/intel/compilers_and_libraries/linux/mkl
     MKL_LIB_DIR = $(MKL_ROOT)/lib/intel64
+    MKL_LIBS = -lmkl_intel_lp64 -lmkl_sequential -lmkl_core
+
+    CXX = g++
+    CXXFLAGS = -m64 -fopenmp -O3 -DMKL -I$(PLASMA_INC_DIR)
+    LDFLAGS = -L$(LIB_DIR) -L$(MKL_LIB_DIR)
+    LIBS = $(PLASMA_LIBS) $(MKL_LIBS)
 endif
 ifeq ($(UNAME),Darwin)
     OMP_LIB_DIR = /opt/intel/oneapi/compiler/latest/mac/compiler/lib
@@ -28,10 +35,10 @@ endif
 all: NoFlush FlushLRU
 
 NoFlush: NoFlush.o
-	$(CXX) -o $@ $<  $(LDFLAGS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $<  $(LDFLAGS) $(LIBS)
 
 FlushLRU: MultCallFlushLRU.o
-	$(CXX) -o $@ $<  $(LDFLAGS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $<  $(LDFLAGS) $(LIBS)
 
 $(CPP_OBJS): %.o: %.cpp
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
