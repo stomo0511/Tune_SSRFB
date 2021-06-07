@@ -42,6 +42,8 @@ int main(const int argc, const char **argv)
 	Gen_rand_mat(MAT_SIZE, MAT_SIZE, A);
 	Gen_rand_mat(maxNB, maxNB, T);
 
+	std::cout << "nb, ib, time\n";
+
 	for (nb = minNB; nb <= maxNB; nb+=32)
 	{
 		for (ib = 2; ib <= nb/2; ib++)
