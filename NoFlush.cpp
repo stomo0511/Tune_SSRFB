@@ -15,7 +15,7 @@ void Gen_rand_mat(const int m, const int n, double *A)
 
 #define MAT_SIZE 16384
 #define N_IT 50
-#define NB_STEP 8
+#define NB_STEP 2
 
 int main(const int argc, const char **argv)
 {
