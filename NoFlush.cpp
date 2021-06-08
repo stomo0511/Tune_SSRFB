@@ -15,6 +15,7 @@ void Gen_rand_mat(const int m, const int n, double *A)
 
 #define MAT_SIZE 16384
 #define N_IT 50
+#define NB_STEP 8
 
 int main(const int argc, const char **argv)
 {
@@ -44,7 +45,7 @@ int main(const int argc, const char **argv)
 
 	std::cout << "nb, ib, time\n";
 
-	for (nb = minNB; nb <= maxNB; nb+=32)
+	for (nb = minNB; nb <= maxNB; nb+=NB_STEP)
 	{
 		for (ib = 2; ib <= nb/2; ib++)
 		{
