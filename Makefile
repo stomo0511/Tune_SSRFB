@@ -1,6 +1,6 @@
 UNAME = $(shell uname)
 ifeq ($(UNAME),Linux)
-    PLASMA_ROOT = /opt/PLASMA-20.9.20
+    PLASMA_ROOT = /opt/plasma-20.9.20
     PLASMA_INC_DIR = $(PLASMA_ROOT)/include
     PLASMA_LIBS = $(PLASMA_ROOT)/lib/libcoreblas.a
 

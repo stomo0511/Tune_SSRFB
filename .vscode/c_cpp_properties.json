@@ -16,10 +16,10 @@
         {
             "name": "Linux",
             "includePath": [
-                "/opt/PLASMA-20.9.20/include"
+                "/opt/plasma-20.9.20/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/g++-9",
+            "compilerPath": "/usr/bin/g++-7",
             "cStandard": "c11",
             "cppStandard": "c++11",
             "intelliSenseMode": "linux-gcc-x86"
