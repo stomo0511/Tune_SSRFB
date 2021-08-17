@@ -2,17 +2,18 @@ UNAME = $(shell uname)
 ifeq ($(UNAME),Linux)
     PLASMA_ROOT = /opt/plasma-20.9.20
     PLASMA_INC_DIR = $(PLASMA_ROOT)/include
-    PLASMA_LIBS = $(PLASMA_ROOT)/lib/libcoreblas.a
+    PLASMA_LIB_DIR = $(PLASMA_ROOT)/lib
+    PLASMA_LIBS = $(PLASMA_LIB_DIR)/libplasma.a $(PLASMA_LIB_DIR)/libcoreblas.a
 
     LIB_DIR = /opt/intel/compilers_and_libraries/linux/lib/intel64
     LIBS = -pthread -lm -ldl
-    MKL_LIB_DIR = $(MKL_ROOT)/lib/intel64
+    MKL_LIB_DIR = $(MKLROOT)/lib/intel64
     MKL_LIBS = -lmkl_intel_lp64 -lmkl_sequential -lmkl_core
 
-    CXX = g++
-    CXXFLAGS = -m64 -fopenmp -O3 -DMKL -I$(PLASMA_INC_DIR)
-    LDFLAGS = -L$(LIB_DIR) -L$(MKL_LIB_DIR)
-    LIBS = $(PLASMA_LIBS) $(MKL_LIBS)
+    CXX = icpc
+    CXXFLAGS = -fopenmp -O3 -DHAVE_MKL -I$(PLASMA_INC_DIR)
+#    LDFLAGS = -L$(LIB_DIR) -L$(MKL_LIB_DIR) 
+    LIBS = $(MKL_LIBS) $(PLASMA_LIBS) 
 endif
 ifeq ($(UNAME),Darwin)
     OMP_LIB_DIR = /opt/intel/oneapi/compiler/latest/mac/compiler/lib
