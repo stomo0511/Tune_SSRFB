@@ -24,15 +24,18 @@ ifeq ($(UNAME),Darwin)
 
     PLASMA_ROOT = /opt/plasma-20.9.20
     PLASMA_INC_DIR = $(PLASMA_ROOT)/include
-    PLASMA_LIBS = $(PLASMA_ROOT)/lib/libcoreblas.a
+    PLASMA_LIBS = $(PLASMA_ROOT)/lib/libcoreblas.a $(PLASMA_ROOT)/lib/libplasma.a
 
     CXX = /usr/local/bin/g++-11
-    CXXFLAGS = -m64 -fopenmp -O3 -DMKL -I$(PLASMA_INC_DIR)
+    CXXFLAGS = -m64 -fopenmp -O3 -DHAVE_MKL -I$(PLASMA_INC_DIR) -I$(MKLROOT)/include
     LDFLAGS = -L$(MKLROOT)/lib -L$(OMP_LIB_DIR)
     LIBS = $(MKL_LIB_ADD) $(MKL_LIBS) $(OMP_LIB_ADD) $(OMP_LIBS) $(PLASMA_LIBS) 
 endif
 
-all: NoFlush FlushLRU
+all: NoFlush FlushLRU PSPAYG
+
+PSPAYG: pspayg.o
+	$(CXX) $(CXXFLAGS) -o $@ $<  $(LDFLAGS) $(LIBS)
 
 NoFlush: NoFlush.o
 	$(CXX) $(CXXFLAGS) -o $@ $<  $(LDFLAGS) $(LIBS)
